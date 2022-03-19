@@ -1,6 +1,13 @@
 module.exports = {
       content: ['./src/**/*.{js,ts,jsx,tsx}'],
       theme: {
+            fontSize: {
+                  heading: '24px',
+                  regular: '18px',
+                  small: '16px',
+                  bigIcon: '28px',
+                  smallIcon: '20px',
+            },
             colors: {
                   dark: '#0a0a0a',
                   blue: {
@@ -11,6 +18,7 @@ module.exports = {
                   white: '#FFFFFF',
                   red: '#a12312',
                   test: '#d76ddb',
+                  test2: '#d9f5ca',
             },
             extend: {},
       },

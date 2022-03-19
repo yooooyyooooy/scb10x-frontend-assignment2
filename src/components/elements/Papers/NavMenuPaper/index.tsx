@@ -6,7 +6,7 @@ interface IProps {
 }
 const NavMenuPaper: React.FC<IProps> = ({ children }) => {
       return (
-            <div className="bg-blue-navmenu w-[500px] grid grid-cols-[1fr_1fr] p-1 gap-x-1">
+            <div className="bg-blue-navmenu w-[500px] grid grid-cols-[1fr_1fr] p-2 gap-x-2 rounded-xl">
                   {children}
             </div>
       );

@@ -5,7 +5,7 @@ interface IProps {
 }
 const NavOptionButton: React.FC<IProps> = ({ children }) => {
       return (
-            <button className="bg-blue-button font-bold text-white py-2 px-4 rounded-xl">
+            <button className="bg-blue-button font-bold text-white py-2 px-4 rounded-xl text-regular">
                   {children}
             </button>
       );
