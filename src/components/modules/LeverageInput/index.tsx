@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import UserAccountContext from '@contexts/UserAccountContext';
 
 const LeverageInput: React.FC = () => {
+      const { userBalance, getCurrentUserETHBalance } = useContext(UserAccountContext);
+      useEffect(() => {
+            getCurrentUserETHBalance();
+      });
       return (
             <div className="space-y-2 ">
-                  <div className="text-small font-medium">Balance: 1.00 ETH</div>
+                  <div className="text-small font-medium">{`Balance: ${userBalance} ETH`}</div>
                   <div className="flex w-full bg-white rounded-lg p-3 ">
                         <input
                               className="w-full rounded-lg text-dark text-regular focus:outline-none"

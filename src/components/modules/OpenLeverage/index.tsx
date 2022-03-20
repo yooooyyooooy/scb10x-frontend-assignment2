@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import MainPaper from '@elements/Papers/MainPaper';
 import LeverageInput from '@modules/LeverageInput';
 import { BlueRoundButton } from '@elements/Buttons/RoundButton';

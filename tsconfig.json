@@ -22,8 +22,7 @@
                   "@modules/*": ["src/components/modules/*"],
                   "@constants/*": ["src/constants/*"],
                   "@contexts/*": ["src/contexts/*"],
-                  "@store/*": ["src/store/*"],
-                  "@services/*": ["src/services/*"]
+                  "@contracts/*": ["src/contracts/*"]
             }
       },
       "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
