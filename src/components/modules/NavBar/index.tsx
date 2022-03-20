@@ -1,13 +1,13 @@
 import React from 'react';
-import RoundButton from '@elements/Buttons/RoundButton';
 import NavMenuPaper from '@elements/Papers/NavMenuPaper';
 import NavOptionButton from '@elements/Buttons/NavOptionButton';
 import HomeButton from '@elements/Buttons/HomeButton';
 import { FaWallet } from 'react-icons/fa';
+import { BlueRoundButton } from '@elements/Buttons/RoundButton';
 
 const NavBar: React.FC = () => {
       return (
-            <nav className=" grid grid-cols-[1fr_4fr_1fr] items-center justify-items-center py-1 px-16">
+            <nav className=" grid grid-cols-[1fr_4fr_1fr] items-center justify-items-center py-2 px-20">
                   <div className="justify-self-start">
                         <HomeButton />
                   </div>
@@ -16,12 +16,12 @@ const NavBar: React.FC = () => {
                         <NavOptionButton>My Position</NavOptionButton>
                   </NavMenuPaper>
                   <div className="justify-self-end">
-                        <RoundButton>
+                        <BlueRoundButton>
                               <div className="flex items-center space-x-3">
                                     <FaWallet className="text-smallIcon" />
                                     <div>Connect Wallet</div>
                               </div>
-                        </RoundButton>
+                        </BlueRoundButton>
                   </div>
             </nav>
       );

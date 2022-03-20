@@ -18,6 +18,7 @@
             "paths": {
                   "@elements/*": ["src/components/elements/*"],
                   "@layouts/*": ["src/components/layouts/*"],
+                  "@templates/*": ["src/components/templates/*"],
                   "@modules/*": ["src/components/modules/*"],
                   "@constants/*": ["src/constants/*"],
                   "@contexts/*": ["src/contexts/*"],
