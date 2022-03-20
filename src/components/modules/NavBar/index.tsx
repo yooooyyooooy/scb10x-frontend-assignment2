@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import NavMenuPaper from '@elements/Papers/NavMenuPaper';
 import NavOptionButton from '@elements/Buttons/NavOptionButton';
 import HomeButton from '@elements/Buttons/HomeButton';
 import { FaWallet } from 'react-icons/fa';
 import { BlueRoundButton } from '@elements/Buttons/RoundButton';
 import { useRouter } from 'next/router';
+
 import { ethers } from 'ethers';
+import UserAccountContext from '@contexts/UserAccountContext';
 const NavBar: React.FC = () => {
-      const [currentAccount, setCurrentAccount] = useState<string | null>(null);
+      const { currentAccount, setCurrentAccount } = useContext(UserAccountContext);
+
       const router = useRouter();
       const toPositionPage = () => {
             router.push('/position');
@@ -38,8 +41,8 @@ const NavBar: React.FC = () => {
       useEffect(() => {
             const { ethereum } = window;
             ethereum.on('accountsChanged', (accounts: string[]) => {
-                  if (currentAccount && accounts.length !== 0)
-                        setCurrentAccount(accounts[0]);
+                  if (accounts.length !== 0) setCurrentAccount(accounts[0]);
+                  else setCurrentAccount(null);
             });
       });
 
@@ -66,17 +69,13 @@ const NavBar: React.FC = () => {
                         <BlueRoundButton onClick={connectWalletHandler}>
                               <div className="flex items-center space-x-3">
                                     <FaWallet className="text-smallIcon" />
-                                    {!currentAccount && (
-                                          <div>Connect Wallet</div>
-                                    )}
+                                    {!currentAccount && <div>Connect Wallet</div>}
                                     {currentAccount && (
                                           <div>
                                                 {`${currentAccount.slice(
                                                       0,
                                                       5,
-                                                )}...${currentAccount.slice(
-                                                      -2,
-                                                )}`}
+                                                )}...${currentAccount.slice(-2)}`}
                                           </div>
                                     )}
                               </div>

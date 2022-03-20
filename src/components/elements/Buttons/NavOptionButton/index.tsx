@@ -5,11 +5,7 @@ interface IProps {
       onClick: () => void;
       showSelected: boolean;
 }
-const NavOptionButton: React.FC<IProps> = ({
-      children,
-      onClick,
-      showSelected,
-}) => {
+const NavOptionButton: React.FC<IProps> = ({ children, onClick, showSelected }) => {
       return (
             <button
                   className={`${

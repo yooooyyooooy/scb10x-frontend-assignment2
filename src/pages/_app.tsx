@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { UserAccountContextProvider } from '@contexts/UserAccountContext';
 
 declare global {
       interface Window {
@@ -7,7 +8,11 @@ declare global {
       }
 }
 function MyApp({ Component, pageProps }: AppProps) {
-      return <Component {...pageProps} />;
+      return (
+            <UserAccountContextProvider>
+                  <Component {...pageProps} />
+            </UserAccountContextProvider>
+      );
 }
 
 export default MyApp;
