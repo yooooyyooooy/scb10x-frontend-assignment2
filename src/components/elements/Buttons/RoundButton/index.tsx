@@ -5,7 +5,7 @@ interface IProps {
 }
 const RoundButton: React.FC<IProps> = ({ children }) => {
       return (
-            <button className="bg-blue-button font-bold text-white text-regular py-3 px-4 rounded-full">
+            <button className="bg-blue-button font-bold text-white text-regular py-3 px-4 rounded-full w-full">
                   {children}
             </button>
       );

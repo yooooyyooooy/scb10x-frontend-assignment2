@@ -1,10 +1,14 @@
+import MainLayout from '@layouts/MainLayout';
 import NavBar from '@modules/NavBar';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 
 const Home: NextPage = () => {
-      return <NavBar />;
+      return (
+            <div className="flex flex-col h-screen">
+                  <NavBar />
+                  <MainLayout />
+            </div>
+      );
 };
 
 export default Home;
