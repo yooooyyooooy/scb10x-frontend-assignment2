@@ -4,6 +4,7 @@ import UserAccountContext from '@contexts/UserAccountContext';
 const LeverageInput: React.FC = () => {
       const { userBalance, getCurrentUserETHBalance } = useContext(UserAccountContext);
       useEffect(() => {
+            console.log('callback');
             getCurrentUserETHBalance();
       });
       return (

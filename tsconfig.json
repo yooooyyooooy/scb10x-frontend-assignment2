@@ -22,7 +22,8 @@
                   "@modules/*": ["src/components/modules/*"],
                   "@constants/*": ["src/constants/*"],
                   "@contexts/*": ["src/contexts/*"],
-                  "@contracts/*": ["src/contracts/*"]
+                  "@contracts/*": ["src/contracts/*"],
+                  "@interfaces/*": ["src/interfaces/*"]
             }
       },
       "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
