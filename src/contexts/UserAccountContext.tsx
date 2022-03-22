@@ -14,12 +14,13 @@ const UserAccountContext = createContext(
             userCurrentPositionInfo: userCurrentPositionInfo;
             userLeverageAmount: string;
             setCurrentAccount: (newCurrentAccount: string | null) => void;
-            getCurrentUserETHBalance: () => Promise<void>;
+            setCurrentUserETHBalance: () => Promise<void>;
             setUserCurrentPositionInfo: (
                   newUserCurrentPositionInfo: userCurrentPositionInfo,
             ) => void;
             getCurrentUserQueryPosition: () => Promise<void>;
             setUserLeverageAmount: (newAmount: string) => void;
+            setMaxUserLeverageAmount: () => Promise<void>;
       },
 );
 
@@ -37,7 +38,7 @@ const UserAccountContextProvider = (props: Props) => {
                   pnl: '-',
             });
 
-      const getCurrentUserETHBalance = async () => {
+      const setCurrentUserETHBalance = async () => {
             if (currentAccount) {
                   const currentUserBalance = await getUserETHbalance(currentAccount);
                   console.log(currentUserBalance);
@@ -71,6 +72,15 @@ const UserAccountContextProvider = (props: Props) => {
                   });
             }
       }, [currentAccount]);
+      const setMaxUserLeverageAmount = async () => {
+            if (currentAccount) {
+                  const currentUserBalance = await getUserETHbalance(currentAccount);
+                  const maxUserLeverageInput = ethers.utils
+                        .parseEther(currentUserBalance)
+                        .sub(ethers.utils.parseEther('0.005'));
+                  setUserLeverageAmount(ethers.utils.formatEther(maxUserLeverageInput));
+            }
+      };
 
       const value = {
             currentAccount,
@@ -78,10 +88,11 @@ const UserAccountContextProvider = (props: Props) => {
             userCurrentPositionInfo,
             userLeverageAmount,
             setCurrentAccount,
-            getCurrentUserETHBalance,
+            setCurrentUserETHBalance,
             setUserCurrentPositionInfo,
             getCurrentUserQueryPosition,
             setUserLeverageAmount,
+            setMaxUserLeverageAmount,
       };
 
       return <UserAccountContext.Provider value={value} {...props} />;

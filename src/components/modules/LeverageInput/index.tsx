@@ -2,10 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import UserAccountContext from '@contexts/UserAccountContext';
 
 const LeverageInput: React.FC = () => {
-      const { userBalance, getCurrentUserETHBalance, userLeverageAmount, setUserLeverageAmount } =
-            useContext(UserAccountContext);
+      const {
+            userBalance,
+            setCurrentUserETHBalance,
+            userLeverageAmount,
+            setUserLeverageAmount,
+            setMaxUserLeverageAmount,
+      } = useContext(UserAccountContext);
       useEffect(() => {
-            getCurrentUserETHBalance();
+            setCurrentUserETHBalance();
       });
       return (
             <div className="space-y-2 ">
@@ -20,7 +25,12 @@ const LeverageInput: React.FC = () => {
                                     setUserLeverageAmount(event.target.value)
                               }
                         />
-                        <button className="text-blue-font text-regular font-semibold">MAX</button>
+                        <button
+                              className="text-blue-font text-regular font-semibold"
+                              onClick={setMaxUserLeverageAmount}
+                        >
+                              MAX
+                        </button>
                   </div>
             </div>
       );
