@@ -12,18 +12,21 @@ const UserAccountContext = createContext(
             currentAccount: string | null;
             userBalance: string;
             userCurrentPositionInfo: userCurrentPositionInfo;
+            userLeverageAmount: string;
             setCurrentAccount: (newCurrentAccount: string | null) => void;
             getCurrentUserETHBalance: () => Promise<void>;
             setUserCurrentPositionInfo: (
                   newUserCurrentPositionInfo: userCurrentPositionInfo,
             ) => void;
             getCurrentUserQueryPosition: () => Promise<void>;
+            setUserLeverageAmount: (newAmount: string) => void;
       },
 );
 
 const UserAccountContextProvider = (props: Props) => {
       const [currentAccount, setCurrentAccount] = useState<string | null>(null);
       const [userBalance, setUserBalance] = useState<string>('0.0000');
+      const [userLeverageAmount, setUserLeverageAmount] = useState<string>('');
       const [userCurrentPositionInfo, setUserCurrentPositionInfo] =
             useState<userCurrentPositionInfo>({
                   ethDepositAmount: '-',
@@ -73,10 +76,12 @@ const UserAccountContextProvider = (props: Props) => {
             currentAccount,
             userBalance,
             userCurrentPositionInfo,
+            userLeverageAmount,
             setCurrentAccount,
             getCurrentUserETHBalance,
             setUserCurrentPositionInfo,
             getCurrentUserQueryPosition,
+            setUserLeverageAmount,
       };
 
       return <UserAccountContext.Provider value={value} {...props} />;

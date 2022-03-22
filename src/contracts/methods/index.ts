@@ -76,7 +76,7 @@ const queryUserPosition = async () => {
       }
 };
 
-const openUserPosition = async () => {
+const openUserPosition = async (userLeverageAmount: string) => {
       const userSigner = provider.getSigner();
       console.log('signer address', await userSigner.getAddress());
 
@@ -134,7 +134,7 @@ const openUserPosition = async () => {
                   userSigner,
             );
             await ethLeverageContract.connect(userSigner).openPosition(130 * 1000, {
-                  value: ethers.utils.parseEther('0.001'),
+                  value: ethers.utils.parseEther(userLeverageAmount),
             });
       } else {
             ethLeverageContract = new Contract(
@@ -143,7 +143,7 @@ const openUserPosition = async () => {
                   userSigner,
             );
             await ethLeverageContract.connect(userSigner).openPosition(130 * 1000, {
-                  value: ethers.utils.parseEther('0.002'),
+                  value: ethers.utils.parseEther(userLeverageAmount),
             });
       }
 };
