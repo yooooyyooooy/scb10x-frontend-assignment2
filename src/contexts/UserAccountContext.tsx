@@ -23,7 +23,7 @@ const UserAccountContext = createContext(
 
 const UserAccountContextProvider = (props: Props) => {
       const [currentAccount, setCurrentAccount] = useState<string | null>(null);
-      const [userBalance, setUserBalance] = useState<string>('0.00');
+      const [userBalance, setUserBalance] = useState<string>('0.0000');
       const [userCurrentPositionInfo, setUserCurrentPositionInfo] =
             useState<userCurrentPositionInfo>({
                   ethDepositAmount: '-',
@@ -37,6 +37,7 @@ const UserAccountContextProvider = (props: Props) => {
       const getCurrentUserETHBalance = async () => {
             if (currentAccount) {
                   const currentUserBalance = await getUserETHbalance(currentAccount);
+                  console.log(currentUserBalance);
                   setUserBalance(currentUserBalance);
             }
       };

@@ -4,13 +4,24 @@ import PositionDetails from '@elements/Displays/PositionDetails';
 import Divider from '@elements/Divider';
 import { RedRoundButton } from '@elements/Buttons/RoundButton';
 import UserAccountContext from '@contexts/UserAccountContext';
+import { closeUserPosition } from '@contracts/methods';
 
 const CloseLeverage: React.FC = () => {
-      const { currentAccount, userCurrentPositionInfo, getCurrentUserQueryPosition } =
+      const { userCurrentPositionInfo, getCurrentUserQueryPosition } =
             useContext(UserAccountContext);
       useEffect(() => {
             getCurrentUserQueryPosition();
       }, [getCurrentUserQueryPosition]);
+
+      const updateInfoAfterClosePosition = async () => {
+            try {
+                  await closeUserPosition();
+            } catch (error) {
+                  console.log(error);
+            } finally {
+                  await getCurrentUserQueryPosition();
+            }
+      };
       return (
             <MainPaper>
                   <div className="text-heading font-bold">My Position</div>
@@ -32,7 +43,7 @@ const CloseLeverage: React.FC = () => {
                         data={`${userCurrentPositionInfo.ethDaiRate} DAI `}
                   />
                   <PositionDetails label="PNL" data={`${userCurrentPositionInfo.pnl} DAI `} />
-                  <RedRoundButton>
+                  <RedRoundButton onClick={updateInfoAfterClosePosition}>
                         <div className="font-semibold">Close Position</div>
                   </RedRoundButton>
             </MainPaper>
