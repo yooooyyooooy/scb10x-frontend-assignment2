@@ -1,7 +1,7 @@
 import { createContext, useCallback, useState } from 'react';
 import { getUserETHbalance, queryUserPosition } from '@contracts/methods';
 import { userCurrentPositionInfo } from '@interfaces/index';
-import { createSecureServer } from 'http2';
+import { ethers } from 'ethers';
 
 interface Props {
       children: React.ReactNode;
@@ -28,8 +28,10 @@ const UserAccountContextProvider = (props: Props) => {
             useState<userCurrentPositionInfo>({
                   ethDepositAmount: '-',
                   daiBorrowedAmount: '-',
+                  ttlETH: '-',
                   leverageLevel: '-',
                   ethDaiRate: '-',
+                  pnl: '-',
             });
 
       const getCurrentUserETHBalance = async () => {
@@ -38,16 +40,32 @@ const UserAccountContextProvider = (props: Props) => {
                   setUserBalance(currentUserBalance);
             }
       };
-
       const getCurrentUserQueryPosition = useCallback(async () => {
-            const { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate } =
+            const { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate, ttlETH, pnl } =
                   await queryUserPosition();
-            setUserCurrentPositionInfo({
-                  ethDepositAmount,
-                  daiBorrowedAmount,
-                  leverageLevel,
-                  ethDaiRate,
-            });
+            if (ethDepositAmount === '-') {
+                  setUserCurrentPositionInfo({
+                        ethDepositAmount,
+                        daiBorrowedAmount,
+                        ttlETH,
+                        leverageLevel,
+                        ethDaiRate,
+                        pnl,
+                  });
+            } else {
+                  setUserCurrentPositionInfo({
+                        ethDepositAmount: parseFloat(
+                              ethers.utils.formatEther(ethDepositAmount),
+                        ).toFixed(4),
+                        daiBorrowedAmount: parseFloat(
+                              ethers.utils.formatEther(daiBorrowedAmount),
+                        ).toFixed(4),
+                        ttlETH: parseFloat(ethers.utils.formatEther(ttlETH)).toFixed(4),
+                        leverageLevel,
+                        ethDaiRate,
+                        pnl: parseFloat(ethers.utils.formatEther(pnl)).toFixed(4),
+                  });
+            }
       }, [currentAccount]);
 
       const value = {

@@ -3,7 +3,6 @@ import MainPaper from '@elements/Papers/MainPaper';
 import PositionDetails from '@elements/Displays/PositionDetails';
 import Divider from '@elements/Divider';
 import { RedRoundButton } from '@elements/Buttons/RoundButton';
-import { queryUserPosition } from '@contracts/methods';
 import UserAccountContext from '@contexts/UserAccountContext';
 
 const CloseLeverage: React.FC = () => {
@@ -24,12 +23,15 @@ const CloseLeverage: React.FC = () => {
                         data={`${userCurrentPositionInfo.daiBorrowedAmount} DAI `}
                   />
                   <Divider />
-                  <PositionDetails label="Total ETH" data="1.3 ETH" />
+                  <PositionDetails
+                        label="Total ETH"
+                        data={`${userCurrentPositionInfo.ttlETH} ETH`}
+                  />
                   <PositionDetails
                         label="Current ETH Price"
                         data={`${userCurrentPositionInfo.ethDaiRate} DAI `}
                   />
-                  <PositionDetails label="PNL" data="30 DAI" />
+                  <PositionDetails label="PNL" data={`${userCurrentPositionInfo.pnl} DAI `} />
                   <RedRoundButton>
                         <div className="font-semibold">Close Position</div>
                   </RedRoundButton>

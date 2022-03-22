@@ -1,8 +1,7 @@
-import { ethers, Wallet, Contract } from 'ethers';
+import { ethers, Wallet, Contract, constants } from 'ethers';
 import ETHLeverageABI from '@contracts/abis/ETHLeverageABI';
 import FactoryABI from '@contracts/abis/FactoryABI';
 import KOVAN_CONSTANTS from '@contracts/constants';
-import UserAccountContext from '@contexts/UserAccountContext';
 
 let provider: ethers.providers.Web3Provider;
 if (typeof window !== 'undefined') {
@@ -29,7 +28,6 @@ const queryUserPosition = async () => {
       const userETHLeverageContractAddress = await factoryContract
             .connect(userSigner)
             .getUserETHLeverageAddress(userSigner.getAddress());
-      // console.log(result);
 
       const ethLeverageContract = new Contract(
             userETHLeverageContractAddress,
@@ -37,20 +35,50 @@ const queryUserPosition = async () => {
             userSigner,
       );
       try {
-            const results = await ethLeverageContract
-                  .connect(userSigner)
-                  .callStatic.queryPosition();
-            return results;
+            const { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate } =
+                  await ethLeverageContract.connect(userSigner).callStatic.queryPosition();
+            const ttlETH = ethDepositAmount.add(ethDepositAmount.mul(leverageLevel).div(100000));
+            const currentHolding = ttlETH.mul(ethDaiRate);
+            const capital = ethDepositAmount.mul(ethDaiRate).add(daiBorrowedAmount);
+            const pnl = currentHolding.sub(capital);
+            console.log(ethers.utils.formatEther(ttlETH));
+
+            return { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate, ttlETH, pnl };
       } catch (error) {
             return {
                   ethDepositAmount: '-',
                   daiBorrowedAmount: '-',
+                  ttlETH: '-',
                   leverageLevel: '-',
                   ethDaiRate: '-',
+                  pnl: '-',
             };
       }
-
-      // console.log(ethLeverageContract.address);
 };
 
-export { getUserETHbalance, queryUserPosition };
+const openUserPosition = async () => {
+      const userSigner = provider.getSigner();
+      console.log('func query', await userSigner.getAddress());
+
+      const factoryContract = await getFactoryContract();
+      const userETHLeverageContractAddress = await factoryContract
+            .connect(userSigner)
+            .getUserETHLeverageAddress(userSigner.getAddress());
+      console.log(userETHLeverageContractAddress);
+
+      let ethLeverageContract: Contract;
+      if (userETHLeverageContractAddress === constants.AddressZero) {
+            console.log('To be done later');
+      } else {
+            ethLeverageContract = new Contract(
+                  userETHLeverageContractAddress,
+                  ETHLeverageABI,
+                  userSigner,
+            );
+            await ethLeverageContract.connect(userSigner).openPosition(130 * 1000, {
+                  value: ethers.utils.parseEther('0.001'),
+            });
+      }
+};
+
+export { getUserETHbalance, queryUserPosition, openUserPosition };
