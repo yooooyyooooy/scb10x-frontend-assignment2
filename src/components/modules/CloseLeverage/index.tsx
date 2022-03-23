@@ -62,7 +62,8 @@ const CloseLeverage: React.FC = () => {
                         onClick={updateInfoAfterClosePosition}
                         isDisabled={
                               currentAccount === null ||
-                              parseFloat(userCurrentPositionInfo.ethDepositAmount) === 0
+                              parseFloat(userCurrentPositionInfo.ethDepositAmount) === 0 ||
+                              userCurrentPositionInfo.ethDepositAmount === '-'
                         }
                   >
                         <div className="font-semibold">Close Position</div>
