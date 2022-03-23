@@ -60,7 +60,10 @@ const CloseLeverage: React.FC = () => {
                   <PositionDetails label="PNL" data={`${userCurrentPositionInfo.pnl} DAI `} />
                   <RedRoundButton
                         onClick={updateInfoAfterClosePosition}
-                        isDisabled={currentAccount === null}
+                        isDisabled={
+                              currentAccount === null ||
+                              parseFloat(userCurrentPositionInfo.ethDepositAmount) === 0
+                        }
                   >
                         <div className="font-semibold">Close Position</div>
                   </RedRoundButton>
