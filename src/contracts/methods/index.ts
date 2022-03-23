@@ -131,18 +131,26 @@ const openUserPosition = async (userLeverageAmount: string) => {
                   ETHLeverageABI,
                   userSigner,
             );
-            await ethLeverageContract.connect(userSigner).openPosition(130 * 1000, {
-                  value: ethers.utils.parseEther(userLeverageAmount),
-            });
+            const openPosition = await ethLeverageContract
+                  .connect(userSigner)
+                  .openPosition(130 * 1000, {
+                        value: ethers.utils.parseEther(userLeverageAmount),
+                  });
+
+            await openPosition.wait();
       } else {
             ethLeverageContract = new Contract(
                   userETHLeverageContractAddress,
                   ETHLeverageABI,
                   userSigner,
             );
-            await ethLeverageContract.connect(userSigner).openPosition(130 * 1000, {
-                  value: ethers.utils.parseEther(userLeverageAmount),
-            });
+            const openPosition = await ethLeverageContract
+                  .connect(userSigner)
+                  .openPosition(130 * 1000, {
+                        value: ethers.utils.parseEther(userLeverageAmount),
+                  });
+
+            await openPosition.wait();
       }
 };
 
@@ -181,7 +189,8 @@ const closeUserPosition = async () => {
       );
 
       try {
-            await ethLeverageContract.connect(userSigner).closePosition();
+            const closePosition = await ethLeverageContract.connect(userSigner).closePosition();
+            await closePosition.wait();
       } catch (error: any) {
             if (error.code === 4001) {
                   return;
