@@ -6,12 +6,15 @@ import { openUserPosition } from '@contracts/methods';
 import UserAccountContext from '@contexts/UserAccountContext';
 
 const OpenLeverage: React.FC = () => {
-      const { userLeverageAmount } = useContext(UserAccountContext);
+      const { userLeverageAmount, currentAccount } = useContext(UserAccountContext);
       return (
             <MainPaper>
                   <div className="text-heading font-bold">Leverage</div>
                   <LeverageInput />
-                  <BlueRoundButton onClick={() => openUserPosition(userLeverageAmount)}>
+                  <BlueRoundButton
+                        onClick={() => openUserPosition(userLeverageAmount)}
+                        isDisabled={currentAccount === null}
+                  >
                         <div className="font-semibold">Leverage 1.3 X</div>
                   </BlueRoundButton>
             </MainPaper>

@@ -17,6 +17,9 @@ module.exports = {
                   },
                   white: '#FFFFFF',
                   red: '#a12312',
+                  gray: {
+                        disabled: '#dcdcdc',
+                  },
                   test: '#d76ddb',
                   test2: '#d9f5ca',
             },

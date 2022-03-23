@@ -26,7 +26,7 @@ const UserAccountContext = createContext(
 
 const UserAccountContextProvider = (props: Props) => {
       const [currentAccount, setCurrentAccount] = useState<string | null>(null);
-      const [userBalance, setUserBalance] = useState<string>('0.0000');
+      const [userBalance, setUserBalance] = useState<string>('-');
       const [userLeverageAmount, setUserLeverageAmount] = useState<string>('');
       const [userCurrentPositionInfo, setUserCurrentPositionInfo] =
             useState<userCurrentPositionInfo>({
@@ -43,12 +43,18 @@ const UserAccountContextProvider = (props: Props) => {
                   const currentUserBalance = await getUserETHbalance(currentAccount);
                   console.log(currentUserBalance);
                   setUserBalance(currentUserBalance);
+            } else {
+                  setUserBalance('-');
             }
       };
       const getCurrentUserQueryPosition = useCallback(async () => {
+            console.log('callback');
+
             const { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate, ttlETH, pnl } =
                   await queryUserPosition();
-            if (ethDepositAmount === '-') {
+            if (ethDepositAmount === '-' && !(currentAccount === null)) {
+                  console.log('hahahaah');
+
                   setUserCurrentPositionInfo({
                         ethDepositAmount,
                         daiBorrowedAmount,
@@ -58,6 +64,7 @@ const UserAccountContextProvider = (props: Props) => {
                         pnl,
                   });
             } else {
+                  console.log('zzzzz');
                   setUserCurrentPositionInfo({
                         ethDepositAmount: parseFloat(
                               ethers.utils.formatEther(ethDepositAmount),

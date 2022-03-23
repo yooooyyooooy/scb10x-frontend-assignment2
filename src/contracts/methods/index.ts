@@ -42,7 +42,6 @@ const getUserETHbalance = async (userAddress: string) => {
 // user interactive functions
 const queryUserPosition = async () => {
       const userSigner = provider.getSigner();
-      // console.log('func query', await userSigner.getAddress());
 
       const factoryContract = await getFactoryContract();
       const userETHLeverageContractAddress = await factoryContract
@@ -61,7 +60,6 @@ const queryUserPosition = async () => {
             const currentHolding = ttlETH.mul(ethDaiRate);
             const capital = ethDepositAmount.mul(ethDaiRate).add(daiBorrowedAmount);
             const pnl = currentHolding.sub(capital);
-            console.log(ethers.utils.formatEther(ttlETH));
 
             return { ethDepositAmount, daiBorrowedAmount, leverageLevel, ethDaiRate, ttlETH, pnl };
       } catch (error) {
@@ -150,7 +148,6 @@ const openUserPosition = async (userLeverageAmount: string) => {
 
 const closeUserPosition = async () => {
       const userSigner = provider.getSigner();
-      // console.log('func query', await userSigner.getAddress());
       const factoryContract = await getFactoryContract();
       const userETHLeverageContractAddress = await factoryContract
             .connect(userSigner)

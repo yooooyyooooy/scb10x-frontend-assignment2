@@ -7,11 +7,26 @@ import UserAccountContext from '@contexts/UserAccountContext';
 import { closeUserPosition } from '@contracts/methods';
 
 const CloseLeverage: React.FC = () => {
-      const { userCurrentPositionInfo, getCurrentUserQueryPosition } =
-            useContext(UserAccountContext);
+      const {
+            userCurrentPositionInfo,
+            setUserCurrentPositionInfo,
+            getCurrentUserQueryPosition,
+            currentAccount,
+      } = useContext(UserAccountContext);
       useEffect(() => {
-            getCurrentUserQueryPosition();
-      }, [getCurrentUserQueryPosition]);
+            if (currentAccount) {
+                  getCurrentUserQueryPosition();
+            } else {
+                  setUserCurrentPositionInfo({
+                        ethDepositAmount: '-',
+                        daiBorrowedAmount: '-',
+                        ttlETH: '-',
+                        leverageLevel: '-',
+                        ethDaiRate: '-',
+                        pnl: '-',
+                  });
+            }
+      }, [currentAccount, getCurrentUserQueryPosition, setUserCurrentPositionInfo]);
 
       const updateInfoAfterClosePosition = async () => {
             try {
@@ -43,7 +58,10 @@ const CloseLeverage: React.FC = () => {
                         data={`${userCurrentPositionInfo.ethDaiRate} DAI `}
                   />
                   <PositionDetails label="PNL" data={`${userCurrentPositionInfo.pnl} DAI `} />
-                  <RedRoundButton onClick={updateInfoAfterClosePosition}>
+                  <RedRoundButton
+                        onClick={updateInfoAfterClosePosition}
+                        isDisabled={currentAccount === null}
+                  >
                         <div className="font-semibold">Close Position</div>
                   </RedRoundButton>
             </MainPaper>
